@@ -49,10 +49,19 @@ export CODEBUILD_BUILD_URL="https://$AWS_DEFAULT_REGION.console.aws.amazon.com/c
 export CODEBUILD_FINAL_BRANCH=${CODEBUILD_WEBHOOK_BRANCH:-"$CODEBUILD_GIT_BRANCH"}
 export CODEBUILD_FINAL_TAG=${CODEBUILD_WEBHOOK_TAG:-"$CODEBUILD_GIT_TAG"}
 
+# Support overriding the branch and tag via an environment variable
+export CODEBUILD_FINAL_BRANCH=${BRANCH_OVERRIDE:-"$CODEBUILD_FINAL_BRANCH"}
+export CODEBUILD_FINAL_TAG=${TAG_OVERRIDE:-"$CODEBUILD_FINAL_TAG"}
+
+echo "==> AWS CodeBuild Standard Environment Variables:"
+env | grep ^CODEBUILD_
+
 echo "==> AWS CodeBuild Extra Environment Variables:"
 echo "==> CI = $CI"
 echo "==> CODEBUILD = $CODEBUILD"
 echo "==> WEBHOOK = $WEBHOOK"
+echo "==> BRANCH_OVERRIDE = $BRANCH_OVERRIDE"
+echo "==> TAG_OVERRIDE = $TAG_OVERRIDE"
 echo "=="
 echo "==> CODEBUILD_WEBHOOK_TYPE = $CODEBUILD_WEBHOOK_TYPE"
 echo "==> CODEBUILD_WEBHOOK_PR = $CODEBUILD_WEBHOOK_PR"
